@@ -3,7 +3,7 @@ require "./eval_context"
 
 module Functions
   def z
-    x1 + x2[0]*x2[1]*x2[2]
+    i + k*m*v+sfcv[0]
   end
 end
 
