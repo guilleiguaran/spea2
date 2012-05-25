@@ -1,3 +1,5 @@
+# TODO: q, pf, c, g, s, ds
+
 module Functions
   def objetive_x(n)
     s0 = 0
@@ -60,7 +62,7 @@ module Functions
   end
 
   def d(ic, jc, mc, v)
-    # TODO: q, PF
+    # TODO: q, pf
     q[ic][jc][mc][v] * (d1(ic, jc, mc) * pf[ic][jc][mc]) + d2(ic, jc, mc)
   end
 
@@ -86,8 +88,9 @@ module Functions
   end
 
   def fc(ic, jc, mc, v)
-    # TODO: x, ds
-    q[ic][jc][mc][v] * (f1v[v] * x[mc] + f2v[v] * ds[mc] + fp3v[v] * h(ic, jc, mc, v))
+    # TODO: ds
+    # TODO: xm o x[m]
+    q[ic][jc][mc][v] * (f1v[v] * xm + f2v[v] * ds[mc] + fp3v[v] * h(ic, jc, mc, v))
   end
 
   def h(ic, jc, mc, v)
