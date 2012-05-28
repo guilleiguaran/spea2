@@ -1,5 +1,5 @@
-# TODO: q, pf, c, g, s, ds
-
+# q, c, g must be generated
+# TODO: ds
 module Functions
   def objetive_x(n)
     s0 = 0
@@ -62,49 +62,41 @@ module Functions
   end
 
   def d(ic, jc, mc, v)
-    # TODO: q, pf
-    q[ic][jc][mc][v] * (d1(ic, jc, mc) * pf[ic][jc][mc]) + d2(ic, jc, mc)
+    q[ic][jc][mc][v] * (d1(ic, jc, mc) * fpf(ic, jc, mc)) + d2(ic, jc, mc)
   end
 
   def d1(ic, jc, mc)
-    # TODO: c, g
     ((0.5 * c[ic][jc] * (1 - g[ic][jc][mc] / c[ic][jc]) * (1 - g[ic][jc][mc] / c[ic][jc])) /
      ( 1 - ([1, x(ic, jc, mc)].min * g[ic][jc][mc] / c[ic][jc])))
   end
 
   def x(ic, jc, mc)
-    # TODO: q, c, s
     (q[i][j][m][0] + q[i][j][m][1])  * c[i][j] / (g[i][j][m] * s[i][j][m]);
   end
 
   def d2(ic, jc, mc)
-    900 * tf * ((x(ic, jc, mc) - 1) + Math.sqrt((x(ic, jc, mc) - 1) * (x(ic, jc, mc) - 1) + (8 * k * l * x(ic, jc, mc)) / (bQ(ic, jc, mc) * tf)))
+    900 * tf * ((x(ic, jc, mc) - 1) + Math.sqrt((x(ic, jc, mc) - 1) * (x(ic, jc, mc) - 1) + (8 * k * fl(ic, jc, mc) * x(ic, jc, mc)) / (bQ(ic, jc, mc) * tf)))
   end
 
   # "big Q"
   def bQ(ic, jc, mc)
-    # TODO: s, g, c
     s[ic][jc][mc] * g[ic][jc][mc] / c[ic][jc]
   end
 
   def fc(ic, jc, mc, v)
     # TODO: ds
-    # TODO: xm o x[m]
     q[ic][jc][mc][v] * (f1v[v] * xm + f2v[v] * ds[mc] + fp3v[v] * h(ic, jc, mc, v))
   end
 
   def h(ic, jc, mc, v)
-    # TODO: q, c
     0.9 * ((1 - u(ic, jc, mc)) / (1 - y(ic, jc, mc)) + (no(ic, jc, mc)) / (q[ic][jc][mc][v] * c[ic][jc]))
   end
 
   def u(ic, jc, mc)
-    # TODO: g, c
     g[ic][jc][mc] / c[ic][jc];
   end
 
   def y(ic, jc, mc)
-    # TODO: q, s
     (q[ic][jc][mc][0] + q[ic][jc][mc][1]) / s[ic][jc][mc]
   end
 
@@ -119,7 +111,6 @@ module Functions
   end
 
   def xo(ic, jc, mc)
-    # TODO: s, g
     0.67 + s[i][j][m] * g[i][j][m] / 600.0
   end
 
@@ -128,7 +119,19 @@ module Functions
   end
 
   def ge(ic, jc, mc, v, ec)
-    # TODO: q, ds
+    # TODO: ds
     q[ic][jc][mc][v] * (ge1[v][ec] * x[mc] + ge2[v][ec] * ds[m] + ge3[v][ec] * h(ic, jc, mc, v))
+  end
+
+  def fpf(ic, jc, mc)
+    index = "0.#{((10 * g[i][j][m] / c[i][j]).to_i)}0"
+    pf[index] || 0
+  end
+
+  def fl(ic, jc, mc)
+    xijm = x(ic, jc, mc)
+    return 0.09 if xijm >= 1
+    index = "0.#{((10 * xijm).to_i)}0"
+    l[index] || l["1.00"]
   end
 end
