@@ -85,7 +85,7 @@ module Functions
 
   def fc(ic, jc, mc, v)
     # TODO: ds
-    q[ic][jc][mc][v] * (f1v[v] * xm + f2v[v] * ds[mc] + fp3v[v] * h(ic, jc, mc, v))
+    q[ic][jc][mc][v] * (f1v[v] * xm + fp3v[v] * h(ic, jc, mc, v)) + (f2v[v] * d(ic, jc, mc, v))
   end
 
   def h(ic, jc, mc, v)
