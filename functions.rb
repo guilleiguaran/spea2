@@ -1,5 +1,9 @@
 # q, c, g must be generated
 module Functions
+  def objectives
+    [:objective_x, :objective_y, :objective_z]
+  end
+
   def objetive_x(n)
     s0 = 0
     (0...n).each do |jc|
