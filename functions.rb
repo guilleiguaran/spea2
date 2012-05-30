@@ -1,5 +1,4 @@
 # q, c, g must be generated
-# TODO: ds
 module Functions
   def objetive_x(n)
     s0 = 0
@@ -84,7 +83,6 @@ module Functions
   end
 
   def fc(ic, jc, mc, v)
-    # TODO: ds
     q[ic][jc][mc][v] * (f1v[v] * xm + fp3v[v] * h(ic, jc, mc, v)) + (f2v[v] * d(ic, jc, mc, v))
   end
 
@@ -119,7 +117,6 @@ module Functions
   end
 
   def ge(ic, jc, mc, v, ec)
-    # TODO: ds
     q[ic][jc][mc][v] * (ge1[v][ec] * x[mc] + ge2[v][ec] * ds[m] + ge3[v][ec] * h(ic, jc, mc, v))
   end
 
