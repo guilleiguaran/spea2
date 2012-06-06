@@ -61,7 +61,7 @@ class Spea2
       p[:objectives] = []
       context.generate_solutions(p[:vector])
       context.objectives.each do |objective|
-        p[:objectives] << context.public_send(objective)
+        p[:objectives] << context.public_send(objective) if context.restrictions_meet?
       end
     end
   end
