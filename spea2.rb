@@ -25,16 +25,16 @@ class Spea2
     child = ""
     bitstring.size.times do |i|
       bit = bitstring[i]
-      child << ((rand()<1.0/bitstring.length.to_f) ? ((bit=='1') ? "0" : "1") : bit)
+      child << ((rand() < 1.0/bitstring.length.to_f) ? ((bit=='1') ? "0" : "1") : bit)
     end
     return child
   end
 
   def uniform_crossover(parent1, parent2, p_crossover)
-    return ""+parent1[:bitstring] if rand()>=p_crossover
+    return "" + parent1[:bitstring] if rand() >= p_crossover
     child = ""
-    parent1[:bitstring].size.times do |i| 
-      child << ((rand()<0.5) ? parent1[:bitstring][i] : parent2[:bitstring][i])
+    parent1[:bitstring].size.times do |i|
+      child << ((rand() < 0.5) ? parent1[:bitstring][i] : parent2[:bitstring][i])
     end
     return child
   end
@@ -52,7 +52,7 @@ class Spea2
   end
 
   def random_bitstring(num_bits)
-    return (0...num_bits).inject(""){|s,i| s<<((rand<0.5) ? "1" : "0")}
+    return (0...num_bits).inject(""){|s,i| s << ((rand<0.5) ? "1" : "0")}
   end
 
   def calculate_objectives(pop, search_space)
@@ -67,25 +67,25 @@ class Spea2
   end
 
   def dominates(p1, p2)
-    p1[:objectives].each_with_index do |x,i|
+    p1[:objectives].each_with_index do |x, i|
       return false if x > p2[:objectives][i]
     end
     return true
   end
 
   def weighted_sum(x)
-    return x[:objectives].inject(0.0) {|sum, x| sum+x}
+    return x[:objectives].inject(0.0) {|sum, x| sum + x}
   end
 
   def distance(c1, c2)
     sum = 0.0
-    c1.each_with_index {|x,i| sum += (c1[i]-c2[i])**2.0}
+    c1.each_with_index { |x,i| sum += (c1[i]-c2[i])**2.0 }
     return Math.sqrt(sum)
   end
 
   def calculate_dominated(pop)
     pop.each do |p1|
-      p1[:dom_set] = pop.select {|p2| dominates(p1, p2) }
+      p1[:dom_set] = pop.select { |p2| dominates(p1, p2) }
     end
   end
 
@@ -97,7 +97,7 @@ class Spea2
 
   def calculate_density(p1, pop)
     pop.each {|p2| p2[:dist] = distance(p1[:objectives], p2[:objectives])}
-    list = pop.sort{|x,y| x[:dist]<=>y[:dist]}
+    list = pop.sort{ |x,y| x[:dist] <=> y[:dist] }
     k = Math.sqrt(pop.length).to_i
     return 1.0 / (list[k][:dist] + 2.0)
   end
@@ -117,7 +117,7 @@ class Spea2
     union = archive + pop
     environment = union.select {|p| p[:fitness]<1.0}
     if environment.length < archive_size
-      union.sort!{|x,y| x[:fitness]<=>y[:fitness]}
+      union.sort!{|x,y| x[:fitness] <=> y[:fitness]}
       union.each do |p|
         environment << p if p[:fitness] >= 1.0
         break if environment.length >= archive_size
@@ -144,19 +144,19 @@ class Spea2
 
   def search(problem_size, search_space, max_gens, pop_size, archive_size, p_crossover)
     pop = Array.new(pop_size) do |i|
-      {:bitstring=>random_bitstring(problem_size*BITS_PER_PARAM)}
+      {:bitstring => random_bitstring(problem_size*BITS_PER_PARAM)}
     end
     gen, archive = 0, []
     begin
-      calculate_fitness(pop, archive, search_space)    
-      archive = environmental_selection(pop, archive, archive_size)    
-      best = archive.sort{|x,y| weighted_sum(x)<=>weighted_sum(y)}.first
+      calculate_fitness(pop, archive, search_space)
+      archive = environmental_selection(pop, archive, archive_size)
+      best = archive.sort{ |x,y| weighted_sum(x)<=>weighted_sum(y) }.first
       puts ">gen=#{gen}, best: x=#{best[:vector]}, objs=#{best[:objectives].join(', ')}"
       if gen >= max_gens
-        archive = archive.select {|p| p[:fitness]<1.0}
+        archive = archive.select { |p| p[:fitness] < 1.0 }
         break
       else
-        selected = Array.new(pop_size){binary_tournament(archive)}
+        selected = Array.new(pop_size){ binary_tournament(archive) }
         pop = reproduce(selected, pop_size, p_crossover)
         gen += 1
       end
