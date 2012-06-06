@@ -2,9 +2,14 @@ class Spea2
   BITS_PER_PARAM = 16
 
   attr_accessor :context
+  attr_accessor :context, :problem_size, :search_space,
+                :max_gens, :pop_size, :archive_size, :p_cross
 
-  def initialize(context)
+  def initialize(context, options)
     self.context = context
+    options.each do |option, value|
+      self.public_send("#{option}=", value)
+    end
   end
 
   def decode(bitstring, search_space)
