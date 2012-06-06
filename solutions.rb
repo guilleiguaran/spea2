@@ -7,7 +7,6 @@ module Solutions
     @c = Array.new(i){ Array.new(n) }
     @q = Array.new(i){ Array.new(n) { Array.new(m) { Array.new(2) } } }
 
-    q = new double[I][n][M][2];
     (0...i).each do |ic|
       c[ic][0] = ci[ic]
       c[ic][n-1] = cf[ic]
