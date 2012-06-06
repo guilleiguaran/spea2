@@ -1,14 +1,16 @@
 class Spea2
+  BITS_PER_PARAM = 16
+
   attr_accessor :context
 
   def initialize(context)
     self.context = context
   end
-  
+
   def decode(bitstring, search_space)
     vector = []
     search_space.each_with_index do |bounds, i|
-      off, sum, j = i*BITS_PER_PARAM, 0.0, 0    
+      off, sum, j = i*BITS_PER_PARAM, 0.0, 0
       bitstring[off...(off+BITS_PER_PARAM)].reverse.each_char do |c|
         sum += ((c=='1') ? 1.0 : 0.0) * (2.0 ** j.to_f)
         j += 1
@@ -38,8 +40,8 @@ class Spea2
   end
 
   def reproduce(selected, population_size, p_crossover)
-    children = []  
-    selected.each_with_index do |p1, i|    
+    children = []
+    selected.each_with_index do |p1, i|
       p2 = (i.even?) ? selected[i+1] : selected[i-1]
       child = {}
       child[:bitstring] = uniform_crossover(p1, p2, p_crossover)
@@ -57,8 +59,10 @@ class Spea2
     pop.each do |p|
       p[:vector] = decode(p[:bitstring], search_space)
       p[:objectives] = []
-      p[:objectives] << objective1(p[:vector])
-      p[:objectives] << objective2(p[:vector])
+      context.generate_solutions(p[:vector])
+      context.objectives.each do |objective|
+        p[:objectives] << context.public_send(objective)
+      end
     end
   end
 
@@ -82,11 +86,11 @@ class Spea2
   def calculate_dominated(pop)
     pop.each do |p1|
       p1[:dom_set] = pop.select {|p2| dominates(p1, p2) }
-    end  
+    end
   end
 
   def calculate_raw_fitness(p1, pop)
-    return pop.inject(0.0) do |sum, p2| 
+    return pop.inject(0.0) do |sum, p2|
       (dominates(p2, p1)) ? sum + p2[:dom_set].size.to_f : sum
     end
   end
@@ -129,7 +133,7 @@ class Spea2
         environment.sort!{|x,y| x[:density]<=>y[:density]}
         environment.shift
       end until environment.length >= archive_size
-    end  
+    end
     return environment
   end
 
@@ -143,7 +147,7 @@ class Spea2
       {:bitstring=>random_bitstring(problem_size*BITS_PER_PARAM)}
     end
     gen, archive = 0, []
-    begin    
+    begin
       calculate_fitness(pop, archive, search_space)    
       archive = environmental_selection(pop, archive, archive_size)    
       best = archive.sort{|x,y| weighted_sum(x)<=>weighted_sum(y)}.first
