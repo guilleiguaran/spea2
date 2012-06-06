@@ -15,5 +15,8 @@ options = {
   :p_cross => 0.90
 }
 
-spea2_instance = Spea2.new(context, options)
-#spea2_instance.search
+(10..13).each do |n|
+  context.n = n
+  spea2_instance = Spea2.new(context, options)
+  #spea2_instance.search
+end
