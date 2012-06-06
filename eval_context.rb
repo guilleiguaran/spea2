@@ -1,10 +1,10 @@
 require "yaml"
 
 class EvalContext
-  attr_reader :functions
-  def initialize(klass)
-    extend klass
-    @functions = klass.instance_methods
+  def initialize(*modules)
+    modules.to_a.each do |mod|
+      extend mod
+    end
   end
 
   def load_variables(filepath)

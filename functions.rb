@@ -4,7 +4,7 @@ module Functions
     [:objective_x, :objective_y, :objective_z]
   end
 
-  def objetive_x(n)
+  def objetive_x
     s0 = 0
     (0...n).each do |jc|
       s1 = 0
@@ -23,7 +23,7 @@ module Functions
     s0
   end
 
-  def objective_y(n)
+  def objective_y
     s0 = 0
     (0...n).each do |jc|
       s1 = 0
@@ -42,7 +42,7 @@ module Functions
     s0
   end
 
-  def objective_z(n)
+  def objective_z
     s0 = 0
     (0...n).each do |jc|
       s1 = 0
