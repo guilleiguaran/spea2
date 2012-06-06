@@ -1,7 +1,5 @@
 module Restrictions
-  def restrictions
-
+  def restrictions_meet?
+    return true
   end
-
-  
 end
