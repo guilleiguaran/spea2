@@ -2,8 +2,8 @@ class Spea2
   BITS_PER_PARAM = 16
 
   attr_accessor :context
-  attr_accessor :context, :problem_size, :search_space,
-                :max_gens, :pop_size, :archive_size, :p_cross
+  attr_accessor :problem_size, :search_space, :max_gens,
+                :pop_size, :archive_size, :p_cross
 
   def initialize(context, options)
     self.context = context
@@ -147,7 +147,7 @@ class Spea2
     return (s1[:fitness] < s2[:fitness]) ? s1 : s2
   end
 
-  def search(problem_size, search_space, max_gens, pop_size, archive_size, p_crossover)
+  def search
     pop = Array.new(pop_size) do |i|
       {:bitstring => random_bitstring(problem_size*BITS_PER_PARAM)}
     end
