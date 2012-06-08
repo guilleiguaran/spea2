@@ -64,7 +64,7 @@ class Spea2
     pop.each do |p|
       p[:vector] = decode(p[:bitstring], search_space)
       p[:objectives] = []
-      context.generate_solutions(p[:vector])
+      context.generate_solution(p[:vector])
       context.objectives.each do |objective|
         p[:objectives] << context.public_send(objective) if context.restrictions_meet?
       end
