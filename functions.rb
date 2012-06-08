@@ -4,15 +4,15 @@ module Functions
     [:objective_x, :objective_y, :objective_z]
   end
 
-  def objetive_x
+  def objective_x
     s0 = 0
     (0...n).each do |jc|
       s1 = 0
       (0...i).each do |ic|
         s2 = 0
         (0...m).each do |mc|
-          sv1 = orijm[0] * d(ic, jc, mc, 0)
-          sv2 = orijm[1] * d(ic, jc, mc, 1)
+          sv1 = orijmv[0] * d(ic, jc, mc, 0)
+          sv2 = orijmv[1] * d(ic, jc, mc, 1)
           s3 = sv1 + sv2
           s2 = s2 + s3
         end
@@ -69,12 +69,14 @@ module Functions
   end
 
   def d1(ic, jc, mc)
-    ((0.5 * c[ic][jc] * (1 - g[ic][jc][mc] / c[ic][jc]) * (1 - g[ic][jc][mc] / c[ic][jc])) /
+     puts "c #{c[ic][jc]}"
+     ((0.5 * c[ic][jc] * (1 - g[ic][jc][mc] / c[ic][jc]) * (1 - g[ic][jc][mc] / c[ic][jc])) /
      ( 1 - ([1, x(ic, jc, mc)].min * g[ic][jc][mc] / c[ic][jc])))
   end
 
   def x(ic, jc, mc)
-    (q[i][j][m][0] + q[i][j][m][1])  * c[i][j] / (g[i][j][m] * s[i][j][m]);
+    puts "q #{q[ic][jc][mc][0]}\n q #{q[ic][jc][mc][1]} \n c #{c[ic][jc]} \n g #{g[ic][jc][mc]} \n s #{s[ic][jc][mc]}"    
+    (q[ic][jc][mc][0] + q[ic][jc][mc][1])  * c[ic][jc] / (g[ic][jc][mc] * s[ic][jc][mc]);
   end
 
   def d2(ic, jc, mc)
@@ -125,7 +127,7 @@ module Functions
   end
 
   def fpf(ic, jc, mc)
-    index = "0.#{((10 * g[i][j][m] / c[i][j]).to_i)}0"
+    index = "0.#{((10 * g[ic][jc][mc] / c[ic][jc]).to_i)}0clea"
     pf[index] || 0
   end
 
