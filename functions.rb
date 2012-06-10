@@ -83,7 +83,7 @@ module Functions
 
   # "big Q"
   def bQ(ic, jc, mc)
-    s[ic][jc][mc] * g[ic][jc][mc] / c[ic][jc].to_f
+    s[ic][mc] * g[ic][jc][mc] / c[ic][jc].to_f
   end
 
   def fc(ic, jc, mc, v)

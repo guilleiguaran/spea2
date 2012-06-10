@@ -8,15 +8,15 @@ module Solutions
     @q = Array.new(i){ Array.new(n) { Array.new(m) { Array.new(2) } } }
 
     (0...i).each do |ic|
-      c[ic][0] = ci[ic]
-      c[ic][n-1] = cf[ic]
+      c[ic][0] = ci[ic].to_f
+      c[ic][n-1] = cf[ic].to_f
       (0...m).each do |mc|
         q[ic][0][mc][0] = qi[mc][ic] * 0.98
         q[ic][0][mc][1] = qi[mc][ic] * 0.02
-        g[ic][0][mc] = gi[mc][ic]
+        g[ic][0][mc] = gi[mc][ic].to_f
         q[ic][n - 1][mc][0] = qf[mc][ic] * 0.98
         q[ic][n - 1][mc][1] = qf[mc][ic] * 0.02
-        g[ic][n - 1][mc] = gf[mc][ic]
+        g[ic][n - 1][mc] = gf[mc][ic].to_f
       end
     end
 

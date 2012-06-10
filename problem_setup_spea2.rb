@@ -12,7 +12,7 @@ options = {
   :max_gens => 50,
   :pop_size => 80,
   :archive_size => 40,
-  :p_cross => 0.90
+  :p_cross => 0.98
 }
 
 (10..10).each do |n|

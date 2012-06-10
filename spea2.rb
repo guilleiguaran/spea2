@@ -64,10 +64,8 @@ class Spea2
     pop.each do |p|
       p[:vector] = decode(p[:bitstring], search_space)
       p[:objectives] = []
+      puts "vector: #{p[:vector]}"
       context.generate_solution(p[:vector])
-      puts "c: #{context.c}\n\n"
-      puts "q: #{context.q}\n\n"
-      puts "g: #{context.g}\n\n"
       context.objectives.each do |objective|
         puts "#{objective}: #{context.public_send(objective)}"
         p[:objectives] << context.public_send(objective) if context.restrictions_meet?
@@ -105,8 +103,12 @@ class Spea2
   end
 
   def calculate_density(p1, pop)
-    pop.each {|p2| p2[:dist] = distance(p1[:objectives], p2[:objectives])}
-    list = pop.sort{ |x,y| x[:dist] <=> y[:dist] }
+    pop.each do |p2|
+      p2[:dist] = distance(p1[:objectives], p2[:objectives])
+    end
+    list = pop.sort do |x, y|
+      x[:dist] <=> y[:dist]
+    end
     k = Math.sqrt(pop.length).to_i
     return 1.0 / (list[k][:dist] + 2.0)
   end
@@ -166,7 +168,7 @@ class Spea2
         break
       else
         selected = Array.new(pop_size){ binary_tournament(archive) }
-        pop = reproduce(selected, pop_size, p_crossover)
+        pop = reproduce(selected, pop_size, p_cross)
         gen += 1
       end
     end while true
