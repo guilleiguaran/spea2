@@ -3,10 +3,9 @@ module Solutions
   # gpow: [1, 5]
   def generate_solution(vector)
     cpow, gpow = vector
-    @g = Array.new(i){ Array.new(n){ Array.new(m) } }
+    @g = Array.new(i){ Array.new(n) { Array.new(m) } }
     @c = Array.new(i){ Array.new(n) }
     @q = Array.new(i){ Array.new(n) { Array.new(m) { Array.new(2) } } }
-    @g = Array.new(i){ Array.new(n) { Array.new(m) } }
 
     (0...i).each do |ic|
       c[ic][0] = ci[ic]
@@ -23,7 +22,7 @@ module Solutions
 
     (0...i).each do |ic|
       (0...m).each do |mc|
-        (1...n - 2).each do |j|
+        (1...n - 1).each do |j|
           q[ic][j][mc][0] = q[ic][j - 1][mc][0] +  (q[ic][n - 1][mc][0] - q[ic][0][mc][0]) / n
           q[ic][j][mc][1] = q[ic][j - 1][mc][1] +  (q[ic][n - 1][mc][1] - q[ic][0][mc][1]) / n
         end
@@ -32,15 +31,15 @@ module Solutions
 
     (0...i).each do |ic|
       (0...m).each do |mc|
-        (1...n - 2).each do |j|
+        (1...n - 1).each do |j|
           g[ic][j][mc] = g[ic][0][mc] +  (g[ic][n - 1][mc] - g[ic][0][mc]) * ((j/n) ** gpow)
         end
       end
     end
 
     (0...i).each do |ic|
-      (1...n - 2).each do |j|
-         c[ic][j] = c[ic][0] + (c[ic][n - 1] - c[ic][0]) * ((j/n) ** cpow)
+      (1...n - 1).each do |j|
+         c[ic][j] = c[ic][0] + (c[ic][n - 1] - c[ic][0]) * ((j/n.to_f) ** cpow)
       end
     end
   end

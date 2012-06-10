@@ -51,8 +51,8 @@ module Functions
         (0...e).each do |ec|
           s3 = 0
           (0...m).each do |mc|
-            sv1 = sfcv[0] * ge(ci, cj, cm, 0, ce)
-            sv2 = sfcv[1] * ge(ci, cj, cm, 1, ce)
+            sv1 = sfcv[0] * ge(ic, jc, mc, 0, ec)
+            sv2 = sfcv[1] * ge(ic, jc, mc, 1, ec)
             s4 = sv1 + sv2
           end
           s2 = s2 + scge[ec]*s3
@@ -69,14 +69,12 @@ module Functions
   end
 
   def d1(ic, jc, mc)
-     puts "c #{c[ic][jc]}"
      ((0.5 * c[ic][jc] * (1 - g[ic][jc][mc] / c[ic][jc]) * (1 - g[ic][jc][mc] / c[ic][jc])) /
      ( 1 - ([1, x(ic, jc, mc)].min * g[ic][jc][mc] / c[ic][jc])))
   end
 
   def x(ic, jc, mc)
-    puts "q #{q[ic][jc][mc][0]}\n q #{q[ic][jc][mc][1]} \n c #{c[ic][jc]} \n g #{g[ic][jc][mc]} \n s #{s[ic][jc][mc]}"    
-    (q[ic][jc][mc][0] + q[ic][jc][mc][1])  * c[ic][jc] / (g[ic][jc][mc] * s[ic][jc][mc]);
+    (q[ic][jc][mc][0] + q[ic][jc][mc][1])  * c[ic][jc] / (g[ic][jc][mc] * s[ic][mc])
   end
 
   def d2(ic, jc, mc)
@@ -85,7 +83,7 @@ module Functions
 
   # "big Q"
   def bQ(ic, jc, mc)
-    s[ic][jc][mc] * g[ic][jc][mc] / c[ic][jc]
+    s[ic][jc][mc] * g[ic][jc][mc] / c[ic][jc].to_f
   end
 
   def fc(ic, jc, mc, v)
@@ -93,15 +91,15 @@ module Functions
   end
 
   def h(ic, jc, mc, v)
-    0.9 * ((1 - u(ic, jc, mc)) / (1 - y(ic, jc, mc)) + (no(ic, jc, mc)) / (q[ic][jc][mc][v] * c[ic][jc]))
+    0.9 * ((1 - u(ic, jc, mc)) / (1 - y(ic, jc, mc)).to_f + (no(ic, jc, mc)) / (q[ic][jc][mc][v] * c[ic][jc]).to_f)
   end
 
   def u(ic, jc, mc)
-    g[ic][jc][mc] / c[ic][jc];
+    g[ic][jc][mc] / c[ic][jc]
   end
 
   def y(ic, jc, mc)
-    (q[ic][jc][mc][0] + q[ic][jc][mc][1]) / s[ic][jc][mc]
+    (q[ic][jc][mc][0] + q[ic][jc][mc][1]) / s[ic][mc]
   end
 
   def no(ic, jc, mc)
@@ -115,7 +113,7 @@ module Functions
   end
 
   def xo(ic, jc, mc)
-    0.67 + s[i][j][m] * g[i][j][m] / 600.0
+    0.67 + s[ic][mc] * g[ic][jc][mc] / 600.0
   end
 
   def z(ic, jc, mc)
@@ -123,11 +121,11 @@ module Functions
   end
 
   def ge(ic, jc, mc, v, ec)
-    q[ic][jc][mc][v] * (ge1[v][ec] * x[mc] + ge2[v][ec] * ds[m] + ge3[v][ec] * h(ic, jc, mc, v))
+    q[ic][jc][mc][v] * (ge1[v][ec] * xm + ge2[v][ec] * ds[mc] + ge3[v][ec] * h(ic, jc, mc, v))
   end
 
   def fpf(ic, jc, mc)
-    index = "0.#{((10 * g[ic][jc][mc] / c[ic][jc]).to_i)}0clea"
+    index = "0.#{((10 * g[ic][jc][mc] / c[ic][jc]).to_i)}0"
     pf[index] || 0
   end
 

@@ -65,7 +65,11 @@ class Spea2
       p[:vector] = decode(p[:bitstring], search_space)
       p[:objectives] = []
       context.generate_solution(p[:vector])
+      puts "c: #{context.c}\n\n"
+      puts "q: #{context.q}\n\n"
+      puts "g: #{context.g}\n\n"
       context.objectives.each do |objective|
+        puts "#{objective}: #{context.public_send(objective)}"
         p[:objectives] << context.public_send(objective) if context.restrictions_meet?
       end
     end
