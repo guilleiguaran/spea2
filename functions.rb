@@ -53,7 +53,7 @@ module Functions
           (0...m).each do |mc|
             sv1 = sfcv[0] * ge(ic, jc, mc, 0, ec)
             sv2 = sfcv[1] * ge(ic, jc, mc, 1, ec)
-            s4 = sv1 + sv2
+            s3 = sv1 + sv2
           end
           s2 = s2 + scge[ec]*s3
         end
