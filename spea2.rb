@@ -1,3 +1,5 @@
+require "csv"
+
 class Spea2
   BITS_PER_PARAM = 16
 
@@ -64,10 +66,8 @@ class Spea2
     pop.each do |p|
       p[:vector] = decode(p[:bitstring], search_space)
       p[:objectives] = []
-      puts "vector: #{p[:vector]}"
       context.generate_solution(p[:vector])
       context.objectives.each do |objective|
-        puts "#{objective}: #{context.public_send(objective)}"
         p[:objectives] << context.public_send(objective) if context.restrictions_meet?
       end
     end
@@ -154,6 +154,7 @@ class Spea2
   end
 
   def search
+    csv = CSV.open("pareto.csv", "wb")
     pop = Array.new(pop_size) do |i|
       {:bitstring => random_bitstring(problem_size*BITS_PER_PARAM)}
     end
@@ -163,6 +164,7 @@ class Spea2
       archive = environmental_selection(pop, archive, archive_size)
       best = archive.sort{ |x,y| weighted_sum(x)<=>weighted_sum(y) }.first
       puts ">gen=#{gen}, best: x=#{best[:vector]}, objs=#{best[:objectives].join(', ')}"
+      csv << best[:objectives]
       if gen >= max_gens
         archive = archive.select { |p| p[:fitness] < 1.0 }
         break
@@ -172,6 +174,7 @@ class Spea2
         gen += 1
       end
     end while true
+    csv.close
     return archive
   end
 end
