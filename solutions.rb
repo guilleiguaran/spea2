@@ -23,8 +23,8 @@ module Solutions
     (0...i).each do |ic|
       (0...m).each do |mc|
         (1...n - 1).each do |j|
-          q[ic][j][mc][0] = q[ic][j - 1][mc][0] +  (q[ic][n - 1][mc][0] - q[ic][0][mc][0]) / n
-          q[ic][j][mc][1] = q[ic][j - 1][mc][1] +  (q[ic][n - 1][mc][1] - q[ic][0][mc][1]) / n
+          q[ic][j][mc][0] = q[ic][j - 1][mc][0] +  (q[ic][n - 1][mc][0] - q[ic][0][mc][0]) / n.to_f
+          q[ic][j][mc][1] = q[ic][j - 1][mc][1] +  (q[ic][n - 1][mc][1] - q[ic][0][mc][1]) / n.to_f
         end
       end
     end
@@ -32,7 +32,7 @@ module Solutions
     (0...i).each do |ic|
       (0...m).each do |mc|
         (1...n - 1).each do |j|
-          g[ic][j][mc] = g[ic][0][mc] +  (g[ic][n - 1][mc] - g[ic][0][mc]) * ((j/n) ** gpow)
+          g[ic][j][mc] = g[ic][0][mc] +  (g[ic][n - 1][mc] - g[ic][0][mc]) * ((j/n.to_f) ** gpow)
         end
       end
     end

@@ -18,5 +18,5 @@ options = {
 (10..10).each do |n|
   context.n = n
   spea2_instance = Spea2.new(context, options)
-  spea2_instance.search
+  #spea2_instance.search
 end
