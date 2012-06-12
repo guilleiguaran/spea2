@@ -3,6 +3,9 @@ module Solutions
   # gpow: [1, 5]
   def generate_solution(vector)
     cpow, gpow = vector
+    cpow = 1/cpow.to_f if cpow < 0
+    gpow = 1/gpow.to_f if gpow < 0
+
     @g = Array.new(i){ Array.new(n) { Array.new(m) } }
     @c = Array.new(i){ Array.new(n) }
     @q = Array.new(i){ Array.new(n) { Array.new(m) { Array.new(2) } } }
