@@ -164,9 +164,8 @@ class Spea2
       archive = environmental_selection(pop, archive, archive_size)
       best = archive.sort{ |x,y| weighted_sum(x)<=>weighted_sum(y) }.first
       puts ">gen=#{gen}, best: x=#{best[:vector]}, objs=#{best[:objectives].join(', ')}"
-      csv << best[:objectives]
       if gen >= max_gens
-        archive = archive.select { |p| p[:fitness] < 1.0 }
+        #archive = archive.select { |p| p[:fitness] < 1.0 }
         break
       else
         selected = Array.new(pop_size){ binary_tournament(archive) }
@@ -174,7 +173,6 @@ class Spea2
         gen += 1
       end
     end while true
-    csv.close
     return archive
   end
 end
