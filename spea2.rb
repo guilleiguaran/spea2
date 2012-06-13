@@ -154,7 +154,7 @@ class Spea2
   end
 
   def search
-    csv = CSV.open("pareto.csv", "wb")
+    csv = CSV.open("pareto#{context.n}.csv", "wb")
     pop = Array.new(pop_size) do |i|
       {:bitstring => random_bitstring(problem_size*BITS_PER_PARAM)}
     end

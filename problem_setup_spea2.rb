@@ -15,8 +15,8 @@ options = {
   :p_cross => 0.98
 }
 
-(10..10).each do |n|
+(10..13).each do |n|
   context.n = n
   spea2_instance = Spea2.new(context, options)
-  spea2_instance.search
+  archive = spea2_instance.search
 end
