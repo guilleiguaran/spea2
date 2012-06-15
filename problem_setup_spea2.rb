@@ -6,7 +6,7 @@ require "./solutions"
 require "csv"
 
 def print_solutions(vectors, context, n)
-  csv = CSV.open("solutions/solutions#{n}.csv", "wb", { col_sep: ";", force_quotes: true })
+  csv = CSV.open("solutions/solutions#{n}.csv", "wb", { col_sep: ";" })
   vectors.each do |vector|
     context.generate_solution(vector)
     csv << ["SOLUCION [#{vector.join(", ")}]"]
@@ -16,17 +16,17 @@ def print_solutions(vectors, context, n)
       (0...context.i).each do |ic|
         rows = ["g#{ic+1}#{jc+1}m int##{ic+1}"]
         (0...context.m).each do |mc|
-          rows << [context.g[ic][jc][mc]]
+          rows << context.g[ic][jc][mc]
         end
-        rows << [context.c[ic][jc]]
-        rows << [context.p[ic][jc]]
+        rows << context.c[ic][jc]
+        rows << context.p[ic][jc]
         csv << rows
       end
 
       (0...context.i).each do |ic|
         rows = ["X#{ic+1}#{jc+1}m int##{ic+1}"]
         (0...context.m).each do |mc|
-          rows << [context.x(ic, jc, mc)]
+          rows << context.x(ic, jc, mc)
         end
         csv << rows
       end
@@ -34,14 +34,14 @@ def print_solutions(vectors, context, n)
       (0...context.i).each do |ic|
         rows = ["S#{ic+1}#{jc+1}m int##{ic+1}"]
         (0...context.m).each do |mc|
-          rows << [context.s[ic][mc]]
+          rows << context.s[ic][mc]
         end
         csv << rows
       end
       (0...context.i).each do |ic|
         rows = ["q#{ic+1}#{jc+1}m int##{ic+1}"]
         (0...context.m).each do |mc|
-          rows << [(context.q[ic][jc][mc][0] + context.q[ic][jc][mc][1])]
+          rows << (context.q[ic][jc][mc][0] + context.q[ic][jc][mc][1])
         end
         csv << rows
       end
