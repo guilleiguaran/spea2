@@ -19,7 +19,7 @@ def print_solution(vectors, context, n)
           rows << [context.g[ic][jc][mc].to_s]
         end
         rows << [context.c[ic][jc].to_s]
-        #rows << [context.p[ic][jc].to_s]
+        rows << [context.p[ic][jc].to_s]
         csv << rows
       end
 

@@ -9,10 +9,13 @@ module Solutions
     @g = Array.new(i){ Array.new(n) { Array.new(m) } }
     @c = Array.new(i){ Array.new(n) }
     @q = Array.new(i){ Array.new(n) { Array.new(m) { Array.new(2) } } }
+    @p = Array.new(i){ Array.new(n) }
 
     (0...i).each do |ic|
       c[ic][0] = ci[ic].to_f
       c[ic][n-1] = cf[ic].to_f
+      p[ic][0] = pi[ic].to_f
+      p[ic][n - 1] = pf0[ic].to_f
       (0...m).each do |mc|
         q[ic][0][mc][0] = qi[mc][ic] * 0.98
         q[ic][0][mc][1] = qi[mc][ic] * 0.02
@@ -43,6 +46,7 @@ module Solutions
     (0...i).each do |ic|
       (1...n - 1).each do |j|
          c[ic][j] = c[ic][0] + (c[ic][n - 1] - c[ic][0]) * ((j/n.to_f) ** cpow)
+         p[ic][j] = p[ic][0] + (p[ic][n - 1] - p[ic][0]) * ((j/n.to_f) ** cpow)
       end
     end
   end
@@ -70,5 +74,9 @@ module Solutions
 
   def g
     @g
+  end
+
+  def p
+    @p
   end
 end
