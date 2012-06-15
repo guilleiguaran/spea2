@@ -1,5 +1,3 @@
-require "csv"
-
 class Spea2
   BITS_PER_PARAM = 16
 
